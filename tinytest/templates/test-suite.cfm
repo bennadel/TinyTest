@@ -1,3 +1,4 @@
+
 <cfscript>
 
 	
@@ -36,71 +37,162 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Tiny Test : Test-Driven Development</title>
+
+		<link rel="stylesheet" type="text/css" href="tinytest/assets/app/css/test-suite.css"></link>
 	</head>
 	<body>
 
-		<h1>
-			Tiny Test : Test-Driven Development
-		</h1>
-
-		<p>
-			I found #numberFormat( arrayLen( testCases ), "," )# test case(s) in the "specs" directory.
-			Please select the test cases that you want to run.
-		</p>
+		<!-- BEGIN: Form. -->
+		<form>
 
 
-		<!--- BEGIN: Test Results. --->
-		<cfif form.submitted>
-			
-			<h2>
-				Test Results
-			</h2>
+			<!-- BEGIN: Test Status. -->
+			<div class="testStatus fail">
 
-			<cfloop index="testResult" array="#testResults#">
-				
+				<!-- BEGIN: Site Info. -->
+				<div class="siteInfo">
 
-				<h4>
-					#testResult.getTestCase()#
-				</h4>
+					<span class="name">
+						TinyTest
+					</span>
+
+					<span class="tddMentality">
+						Red - Green - Refactor
+					</span>
+
+					<span class="author">
+						by <a href="http://www.bennadel.com" target="bennadelcom">Ben Nadel</a>
+					</span>
+
+				</div>
+				<!-- END: Site Info. -->
+
+				<button class="callToAction">
+
+					<div class="subtitle">
+						<span>Test Driven Development</span>
+					</div>
+
+					<div class="status">
+						Start
+					</div>
+
+					<div class="button">
+						Run Selected Tests
+					</div>
+
+					<div class="errorInfo">
+
+						<div class="subtitle">
+							<span>What Went Wrong</span>
+						</div>
+
+						<div class="file">
+							NotificationServiceTest.cfc : Line 16
+						</div>
+
+						<div class="message">
+							Expected [123] to be [ABC].
+						</div>
+
+					</div>
+
+				</button>
+
+			</div>
+			<!-- END: Test Status. -->
 
 
-			</cfloop>
+			<!-- BEGIN: Test List. -->
+			<div class="testList">
 
-			<hr />
+				<div class="header">
 
-		</cfif>
-		<!--- END: Test Results. --->
+					<div class="title">
+						<span class="text">You Have 87 Test Cases</span>
+						<span class="selectAll">( <a href="##">Select All</a> )</span>
+					</div>
 
-
-		<form method="post" action="#cgi.script_name#">
-
-			<input type="hidden" name="submitted" value="true" />
-
-			<p>
-				<input type="submit" value="Run Selected Tests" />
-			</p>
-
-			<cfloop index="testCase" array="#testCases#">
-				
-				<div>
-
-					<label for="#testCase#">
-
-						<input id="#testCase#" type="checkbox" name="selectedTestCases" value="#testCase#"
-							<cfif listFind( selectedTestCases, testCase )>
-								checked="checked"
-							</cfif>
-							/>
-
-						#testCase#
-
-					</label>
+					<input type="text" placeholder="Filter test cases" class="filter" />
 
 				</div>
 
-			</cfloop>
+				<ol class="tests">
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+				</ol>
+
+				<div class="subtitle">
+					<span>You Have 87 Test Cases</span>
+				</div>
+
+				<ol class="tests">
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+					<li class="test">
+
+						<label>
+							<input type="checkbox" /> NotificationServiceTest
+						</label>
+
+					</li>
+				</ol>
+
+			</div>
+			<!-- END: Test List. -->
 
 		</form>
+		<!-- END: Form. -->
+
+
+		<!-- BEGIN: Processing. -->
+		<div class="processingOverlay">
+
+			<div class="message">
+				
+				<div class="plan">
+					Running 7 Test Cases
+				</div>
+
+				<div class="patience">
+					Please stand by...
+				</div>
+
+			</div>
+
+		</div>
+		<!-- END: Processing. -->
 
 
 		<script type="text/javascript" src="./tinytest/assets/jquery/jquery-1.9.1.min.js"></script>
