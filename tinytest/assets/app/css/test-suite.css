@@ -230,32 +230,6 @@ div.testList div.header input.filter::-webkit-input-placeholder {
   font-style: italic;
   font-weight: 100 ;
 }
-div.testList div.subtitle {
-  font-size: 16px ;
-  font-family: "arial black", gadget, sans-serif;
-  height: 21px ;
-  line-height: 21px ;
-  margin: 30px auto 30px auto ;
-  position: relative ;
-  text-align: center ;
-  text-transform: uppercase ;
-}
-div.testList div.subtitle:before {
-  background-color: #CCCCCC ;
-  content: "";
-  height: 1px ;
-  left: 0px ;
-  position: absolute ;
-  right: 0px ;
-  top: 12px ;
-}
-div.testList div.subtitle span {
-  background-color: #FFFFFF ;
-  display: inline-block;
-  padding: 0px 20px 0px 20px ;
-  position: relative ;
-  z-index: 2 ;
-}
 div.testList ol.tests {
   font-size: 16px ;
   font-weight: 100 ;
@@ -280,6 +254,11 @@ div.testList ol.tests li.test:last-child {
   -webkit-border-radius: 0px 0px 4px 4px;
   -moz-border-radius: 0px 0px 4px 4px;
   border-radius: 0px 0px 4px 4px;
+}
+div.testList ol.tests li.test:first-child:last-child {
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
 }
 div.testList ol.tests label {
   cursor: pointer ;

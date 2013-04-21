@@ -129,7 +129,7 @@
 		form: $( "form" ),
 		filter: $( "input.filter" ),
 		selectAll: $( "span.selectAll a" ),
-		testCases: $( "div.testList ol.tests.all" ),
+		testCases: $( "div.testList ol.tests" ),
 		processingOverlay: $( "div.processingOverlay" ),
 		processingCount: $( "div.processingOverlay span.count" )
 	};

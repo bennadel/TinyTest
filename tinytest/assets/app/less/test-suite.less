@@ -330,35 +330,6 @@ div.testList {
 		}
 	}
 
-	div.subtitle {
-		font-size: 16px ;
-		.font-family-heavy ;
-		height: 21px ;
-		line-height: 21px ;
-		margin: 30px auto 30px auto ;
-		position: relative ;
-		text-align: center ;
-		text-transform: uppercase ;
-
-		&:before {
-			background-color: #CCCCCC ;
-			content: "" ;
-			height: 1px ;
-			left: 0px ;
-			position: absolute ;
-			right: 0px ;
-			top: 12px ;
-		}
-
-		span {
-			background-color: #FFFFFF ;
-			display: inline-block ;
-			padding: 0px 20px 0px 20px ;
-			position: relative ; 			// Needed for proper zIndex ordering.
-			z-index: 2 ;
-		}
-	}
-
 	ol.tests {
 		font-size: 16px ;
 		font-weight: 100 ;
@@ -383,6 +354,10 @@ div.testList {
 
 			&:last-child {
 				.border-radius( 0px 0px 4px 4px ) ;
+			}
+
+			&:first-child:last-child {
+				.border-radius( 4px 4px 4px 4px ) ;
 			}
 		}
 

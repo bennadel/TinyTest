@@ -15,10 +15,6 @@
 
 		testResults = testSuite.runTestCases( form.selectedTestCases );
 
-	} else {
-
-		form.selectedTestCases = arrayToList( testCases, "" );
-
 	}
 
 
@@ -112,7 +108,7 @@
 				<div class="header">
 
 					<div class="title">
-						<span class="text">You Have 87 Test Cases</span>
+						<span class="text">You Have #arrayLen( testCases )# Test Cases</span>
 						<span class="selectAll">( <a href="##">Select All</a> )</span>
 					</div>
 
@@ -120,56 +116,22 @@
 
 				</div>
 
-				<ol class="tests selected">
-					<li class="test">
+				<ol class="tests">
 
-						<label>
-							<input type="checkbox" /> NotificationServiceTest
-						</label>
+					<cfloop 
+						index="testCase"
+						array="#testCases#">
+						
+						<li class="test">
 
-					</li>
-					<li class="test">
+							<label>
+								<input type="checkbox" name="selectedTestCases" value="#htmlEditFormat( testCase )#" /> #htmlEditFormat( testCase )#
+							</label>
 
-						<label>
-							<input type="checkbox" /> UserServiceTest
-						</label>
+						</li>
 
-					</li>
-					<li class="test">
+					</cfloop>
 
-						<label>
-							<input type="checkbox" /> TeamServiceTest
-						</label>
-
-					</li>
-				</ol>
-
-				<div class="subtitle">
-					<span>You Have 87 Test Cases</span>
-				</div>
-
-				<ol class="tests all">
-					<li class="test">
-
-						<label>
-							<input type="checkbox" /> NotificationServiceTest
-						</label>
-
-					</li>
-					<li class="test">
-
-						<label>
-							<input type="checkbox" /> UserServiceTest
-						</label>
-
-					</li>
-					<li class="test">
-
-						<label>
-							<input type="checkbox" /> TeamServiceTest
-						</label>
-
-					</li>
 				</ol>
 
 			</div>
