@@ -43,11 +43,14 @@
 	<body>
 
 		<!-- BEGIN: Form. -->
-		<form>
+		<form method="post" action="#cgi.script_name#">
+
+			<!-- Flag the form as submitted. -->
+			<input type="hidden" name="submitted" value="true" />
 
 
 			<!-- BEGIN: Test Status. -->
-			<div class="testStatus fail">
+			<div class="testStatus start">
 
 				<!-- BEGIN: Site Info. -->
 				<div class="siteInfo">
@@ -67,7 +70,7 @@
 				</div>
 				<!-- END: Site Info. -->
 
-				<button class="callToAction">
+				<button type="submit" class="callToAction">
 
 					<div class="subtitle">
 						<span>Test Driven Development</span>
@@ -113,11 +116,11 @@
 						<span class="selectAll">( <a href="##">Select All</a> )</span>
 					</div>
 
-					<input type="text" placeholder="Filter test cases" class="filter" />
+					<input type="text" placeholder="Filter test cases" tabindex="1" class="filter" />
 
 				</div>
 
-				<ol class="tests">
+				<ol class="tests selected">
 					<li class="test">
 
 						<label>
@@ -128,14 +131,14 @@
 					<li class="test">
 
 						<label>
-							<input type="checkbox" /> NotificationServiceTest
+							<input type="checkbox" /> UserServiceTest
 						</label>
 
 					</li>
 					<li class="test">
 
 						<label>
-							<input type="checkbox" /> NotificationServiceTest
+							<input type="checkbox" /> TeamServiceTest
 						</label>
 
 					</li>
@@ -145,7 +148,7 @@
 					<span>You Have 87 Test Cases</span>
 				</div>
 
-				<ol class="tests">
+				<ol class="tests all">
 					<li class="test">
 
 						<label>
@@ -156,14 +159,14 @@
 					<li class="test">
 
 						<label>
-							<input type="checkbox" /> NotificationServiceTest
+							<input type="checkbox" /> UserServiceTest
 						</label>
 
 					</li>
 					<li class="test">
 
 						<label>
-							<input type="checkbox" /> NotificationServiceTest
+							<input type="checkbox" /> TeamServiceTest
 						</label>
 
 					</li>
@@ -182,7 +185,7 @@
 			<div class="message">
 				
 				<div class="plan">
-					Running 7 Test Cases
+					Running <span class="count">0</span> Test Cases
 				</div>
 
 				<div class="patience">
@@ -195,10 +198,9 @@
 		<!-- END: Processing. -->
 
 
+		<!-- Initialize interface scripts. -->
 		<script type="text/javascript" src="./tinytest/assets/jquery/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript">
-			// ...
-		</script>
+		<script type="text/javascript" src="./tinytest/assets/app/main.js"></script>
 
 	</body>
 	</html>
