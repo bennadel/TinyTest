@@ -87,12 +87,18 @@ div.siteInfo {
 	line-height: 30px ;
 	position: relative ;
 
-	span.name {
+	a.name {
+		color: #C4CBCE ;
 		left: 20px ;
 		position: absolute ;
+		text-decoration: none ;
 		text-transform: uppercase ;
 		top: 0px ;
 		z-index: 2 ;
+
+		&:hover {
+			text-decoration: underline ;
+		}
 	}
 
 	span.tddMentality {

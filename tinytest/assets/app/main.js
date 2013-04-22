@@ -43,6 +43,13 @@
 	}
 
 
+	function isRefreshEvent( event ) {
+
+		return( ( event.which === 114 ) && event.metaKey );
+
+	}
+
+
 	function isEnterKeyEvent( event ) {
 
 		return( event.which === 13 );
@@ -186,6 +193,23 @@
 			} else {
 
 				event.preventDefault();
+
+			}
+
+		}
+	);
+
+	$( window ).keypress(
+		function( event ) {
+
+			if ( isRefreshEvent( event ) ) {
+
+				// This will prevent the browser from asking if the form data should be
+				// resubmitted (for security reasons). Since we just want to resubmit the
+				// data, this will remove that friction.
+				event.preventDefault();
+
+				dom.form.submit();
 
 			}
 

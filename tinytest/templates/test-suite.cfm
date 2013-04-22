@@ -69,9 +69,9 @@
 			<!-- BEGIN: Site Info. -->
 			<div class="siteInfo">
 
-				<span class="name">
+				<a href="#cgi.script_name#" class="name">
 					TinyTest
-				</span>
+				</a>
 
 				<span class="tddMentality">
 					Red - Green - Refactor

@@ -16,12 +16,17 @@ div.siteInfo {
   line-height: 30px ;
   position: relative ;
 }
-div.siteInfo span.name {
+div.siteInfo a.name {
+  color: #C4CBCE ;
   left: 20px ;
   position: absolute ;
+  text-decoration: none ;
   text-transform: uppercase ;
   top: 0px ;
   z-index: 2 ;
+}
+div.siteInfo a.name:hover {
+  text-decoration: underline ;
 }
 div.siteInfo span.tddMentality {
   display: block ;
