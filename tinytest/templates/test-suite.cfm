@@ -2,6 +2,34 @@
 <cfscript>
 
 	
+	function testing() {
+
+		throw( type = "foobar" );
+
+	}
+
+
+	try {
+
+		testing();
+		
+	} catch( any error ){ 
+
+		// writeDump(error);
+
+		e = new tinytest.lib.Error( error );
+
+		writeDump( e.getErrorMessage() );
+		writeDump( e.getStackTrace() );
+
+
+
+	}
+
+
+
+	abort;
+	
 	param name="form.submitted" type="boolean" default=false;
 	param name="form.selectedTestCases" type="string" default="";
 
@@ -11,9 +39,34 @@
 	testCases = testSuite.getTestCases();
 
 
+	mode = "start";
+	statusClass = "start";
+	statusLabel = "Start";
+
+
 	if ( form.submitted ) {
 
+		if ( ! len( form.selectedTestCases ) ) {
+
+			location( url = cgi.script_name, addToken = false );
+
+		}
+
 		testResults = testSuite.runTestCases( form.selectedTestCases );
+
+		if ( testResults.isPassed() ) {
+
+			mode = "pass";
+			statusClass = "pass";
+			statusLabel = "Passed";
+
+		} else {
+
+			mode = "fail";
+			statusClass = "fail";
+			statusLabel = "Failed";
+
+		}
 
 	}
 
@@ -46,7 +99,7 @@
 
 
 			<!-- BEGIN: Test Status. -->
-			<div class="testStatus start">
+			<div class="testStatus #testStatusClass#">
 
 				<!-- BEGIN: Site Info. -->
 				<div class="siteInfo">
@@ -68,33 +121,75 @@
 
 				<button type="submit" class="callToAction">
 
-					<div class="subtitle">
-						<span>Test Driven Development</span>
-					</div>
 
-					<div class="status">
-						Start
-					</div>
+					<!--- BEGIN: Mode Output. --->
+					<cfif ( mode eq "start" )>
 
-					<div class="button">
-						Run Selected Tests
-					</div>
-
-					<div class="errorInfo">
 
 						<div class="subtitle">
-							<span>What Went Wrong</span>
+							<span>Test Driven Development</span>
 						</div>
 
-						<div class="file">
-							NotificationServiceTest.cfc : Line 16
+						<div class="status">
+							#htmlEditFormat( testStatusLabel )#
 						</div>
 
-						<div class="message">
-							Expected [123] to be [ABC].
+						<div class="button">
+							Run Selected Tests
+						</div>
+						
+
+					<cfelseif ( mode eq "pass" )>
+
+
+						<div class="subtitle">
+							<span>Test Driven Development</span>
 						</div>
 
-					</div>
+						<div class="status">
+							#htmlEditFormat( testStatusLabel )#
+						</div>
+
+						<div class="button">
+							Run Selected Tests
+						</div>
+
+
+					<cfelseif ( mode eq "fail")>
+
+
+						<div class="subtitle">
+							<span>Test Driven Development</span>
+						</div>
+
+						<div class="status">
+							#htmlEditFormat( testStatusLabel )#
+						</div>
+
+						<div class="button">
+							Run Selected Tests
+						</div>
+
+						<div class="errorInfo">
+
+							<div class="subtitle">
+								<span>What Went Wrong</span>
+							</div>
+
+							<div class="file">
+								NotificationServiceTest.cfc : Line 16
+							</div>
+
+							<div class="message">
+								Expected [123] to be [ABC].
+							</div>
+
+						</div>
+
+
+					</cfif>
+					<!--- END: Mode Output. --->
+
 
 				</button>
 
@@ -125,7 +220,18 @@
 						<li class="test">
 
 							<label>
-								<input type="checkbox" name="selectedTestCases" value="#htmlEditFormat( testCase )#" /> #htmlEditFormat( testCase )#
+								
+								<input 
+									type="checkbox"
+									name="selectedTestCases"
+									value="#htmlEditFormat( testCase )#" 
+									<cfif listFind( form.selectedTestCases, testCase )>
+										checked="checked"
+									</cfif>
+									/>
+
+								#htmlEditFormat( testCase )#
+
 							</label>
 
 						</li>

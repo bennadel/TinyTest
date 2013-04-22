@@ -39,6 +39,9 @@ component
 
 	public any function runTestCases( required string testCaseList ) {
 
+		return(
+			new TestResults()
+		);
 
 	}
 

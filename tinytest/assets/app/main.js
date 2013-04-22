@@ -119,7 +119,10 @@
 
 		dom.processingCount.text( testCaseCount );
 
-		dom.processingOverlay.fadeIn( 200 );
+		dom.processingOverlay
+			.delay( 500 )
+			.fadeIn( 200 )
+		;
 
 	}
 
