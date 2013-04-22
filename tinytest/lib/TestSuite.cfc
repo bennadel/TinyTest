@@ -39,9 +39,11 @@ component
 
 	public any function runTestCases( required string testCaseList ) {
 
-		return(
-			new TestResults()
-		);
+		var results = new TestResults();
+
+		results.endTestingWithSuccess();
+
+		return( results );
 
 	}
 

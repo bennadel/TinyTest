@@ -6,13 +6,15 @@ component
 
 	public any function init() {
 
-		isFinished = false;
+		// For duration of testing.
+		startTime = getTickCount();	
+		endTime = 0;
 
-		startTime = getTickCount();
-		endTime = startTime;
+		// The number of test methods that have been executed.
+		testCount = 0;
 
-		errorMessage = "";
-		stackTrace = [];
+		// Will contain an instance of the Error.cfc if there is an error.
+		error = "";
 
 		return( this );
 
@@ -24,70 +26,117 @@ component
 	// ---
 
 
+	public void function addTest() {
+
+		testCount++;
+
+	}
+
+
 	// I end the tests with a successful conclusion.
-	public void function endTests() {
+	public void function endTestingWithSuccess() {
 
-		if ( isFinished ) {
+		if ( isComplete() ) {
 
-			throw( type = "InvalidState", message = "Tests have already been ended." );
+			throw( type = "InvalidState", message = "Testing is already complete." );
 
 		}
-
-		isFinished = true;
 
 		endTime = getTickCount();
 
 	}
 
 
-	public void function endTestsInError( required any exception ) {
+	public void function endTestingWithError( required any error ) {
 
-		if ( isFinished ) {
+		if ( isComplete() ) {
 
-			throw( type = "InvalidState", message = "Tests have already been ended." );
+			throw( type = "InvalidState", message = "Testing is already complete." );
 
 		}
 
-		isFinished = true;
-
 		endTime = getTickCount();
+
+		variables.error = error;
 
 	}
 
 
-	public void function startTests() {
+	public numeric function getDuration() {
+
+		if ( isComplete() ) {
+
+			return( endTime - startTime );
+
+		}
+
+		return( getTickCount() - startTime );
+
+	}
+
+
+	public numeric function getTestCount() {
+
+		return( testCount );
+
+	}
+
+
+	public boolean function isComplete() {
+
+		return( endTime != 0 );
+
+	}
+
+
+	public void function startTesting() {
+
+		if ( isComplete() ) {
+
+			throw( type = "InvalidState", message = "Testing is already complete." );
+
+		}
 
 		startTime = getTickCount();
-		endTime = startTime;
 
 	}
 
 
+	public any function getError() {
 
-	public string function getErrorMessage() {
+		if ( isSimpleValue( error ) ) {
 
-		return( errorMessage );
+			return;
 
-	}
-
-
-	public array function getStackTrace() {
-
-		return( stackTrace );
+		}
+		
+		return( error );
 
 	}
 
 
 	public boolean function isFailed() {
 
-		return( !! len( errorMessage ) );
+		if ( ! isComplete() ) {
+
+			throw( type = "InvalidState", message = "Testing is not complete." );
+
+		}
+
+		return( ! isSimpleValue( error ) );
 
 	}
 
 
 	public boolean function isPassed() {
 
-		return( ! len( errorMessage ) );
+		if ( ! isComplete() ) {
+
+			throw( type = "InvalidState", message = "Testing is not complete." );
+
+		}
+
+		return( !! isSimpleValue( error ) );
 
 	}
 

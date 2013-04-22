@@ -92,7 +92,7 @@ component
 			arrayAppend(
 				simplifiedContext,
 				{
-					file = getFileFromPath( tagContext.template ),
+					filename = getFileFromPath( tagContext.template ),
 					lineNumber = tagContext.line
 				}
 			);

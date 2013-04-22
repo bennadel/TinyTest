@@ -10,8 +10,7 @@
 
 	testCases = testSuite.getTestCases();
 
-
-	mode = "start";
+	testStatus = "start";
 
 
 	if ( form.submitted ) {
@@ -24,17 +23,7 @@
 
 		testResults = testSuite.runTestCases( form.selectedTestCases );
 
-		if ( testResults.isPassed() ) {
-
-			mode = "pass";
-
-		} else {
-
-			mode = "fail";
-
-		}
-
-		mode = "fail";
+		testStatus = ( testResults.isPassed() ? "pass" : "fail" );
 
 	}
 
@@ -85,8 +74,8 @@
 			<!-- END: Site Info. -->
 
 
-			<!--- BEGIN: Mode Output. --->
-			<cfif ( mode eq "start" )>
+			<!--- BEGIN: Status Output. --->
+			<cfif ( testStatus eq "start" )>
 
 
 				<!-- BEGIN: Test Status. -->
@@ -112,7 +101,7 @@
 				<!-- END: Test Status. -->
 
 
-			<cfelseif ( mode eq "pass" )>
+			<cfelseif ( testStatus eq "pass" )>
 
 
 				<!-- BEGIN: Test Status. -->
@@ -121,7 +110,7 @@
 					<button type="submit" class="callToAction">
 
 						<div class="subtitle">
-							<span>You Ran X Tests</span>
+							<span>You Ran #numberFormat( testResults.getTestCount(), "," )# Tests In #numberFormat( testResults.getDuration(), "," )# ms</span>
 						</div>
 
 						<div class="status">
@@ -138,7 +127,7 @@
 				<!-- END: Test Status. -->
 
 
-			<cfelseif ( mode eq "fail")>
+			<cfelseif ( testStatus eq "fail")>
 
 
 				<!-- BEGIN: Test Status. -->
@@ -164,12 +153,25 @@
 								<span>What Went Wrong</span>
 							</div>
 
-							<div class="file">
-								NotificationServiceTest.cfc : Line 16
-							</div>
+							<cfloop
+								index="stackItem"
+								array="#testResults.getError().getStackTrace()#">
+									
+								<!--- Ignore some "noise" items. --->
+								<cfif listFindNoCase( "Application.cfc,test-suite.cfm", stackItem.filename )>
+									
+									<cfcontinue />
+
+								</cfif>
+
+								<div class="file">
+									#stackItem.filename# : Line #stackItem.lineNumber#
+								</div>
+
+							</cfloop>		
 
 							<div class="message">
-								Expected [123] to be [ABC].
+								#htmlEditFormat( testResults.getError().getErrorMessage() )#
 							</div>
 
 						</div>
@@ -181,7 +183,7 @@
 
 
 			</cfif>
-			<!--- END: Mode Output. --->
+			<!--- END: Status Output. --->
 
 
 			<!-- BEGIN: Test List. -->
