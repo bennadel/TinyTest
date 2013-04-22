@@ -7,11 +7,8 @@ body {
 form {
   margin: 0px 0px 0px 0px ;
 }
-div.testStatus {
-  border-bottom: 30px solid #EDF3F3 ;
-  margin-bottom: 30px ;
-}
-div.testStatus div.siteInfo {
+div.siteInfo {
+  background-color: #161616 ;
   color: #C4CBCE ;
   font-size: 14px ;
   font-weight: 100 ;
@@ -19,28 +16,35 @@ div.testStatus div.siteInfo {
   line-height: 30px ;
   position: relative ;
 }
-div.testStatus div.siteInfo span.name {
+div.siteInfo span.name {
   left: 20px ;
   position: absolute ;
   text-transform: uppercase ;
   top: 0px ;
   z-index: 2 ;
 }
-div.testStatus div.siteInfo span.tddMentality {
+div.siteInfo span.tddMentality {
   display: block ;
   text-align: center ;
   text-transform: uppercase ;
 }
-div.testStatus div.siteInfo span.author {
+div.siteInfo span.author {
   position: absolute ;
   right: 20px ;
   top: 0px ;
   z-index: 2 ;
 }
-div.testStatus div.siteInfo span.author a {
+div.siteInfo span.author a {
   color: inherit ;
   text-decoration: none ;
   text-transform: uppercase ;
+}
+div.siteInfo span.author a:hover {
+  text-decoration: underline ;
+}
+div.testStatus {
+  border-bottom: 30px solid #EDF3F3 ;
+  margin-bottom: 30px ;
 }
 div.testStatus button.callToAction {
   border: none ;
@@ -111,9 +115,6 @@ div.testStatus button.callToAction div.errorInfo div.message {
   font-size: 20px ;
   line-height: 25px ;
 }
-div.testStatus.start div.siteInfo {
-  background-color: #121A1D ;
-}
 div.testStatus.start button.callToAction {
   background-color: #709DB0 ;
 }
@@ -129,9 +130,6 @@ div.testStatus.start button.callToAction div.subtitle span {
 div.testStatus.start button.callToAction div.button {
   background-color: #FFC618 ;
 }
-div.testStatus.pass div.siteInfo {
-  background-color: #181A0C ;
-}
 div.testStatus.pass button.callToAction {
   background-color: #88934B ;
 }
@@ -146,9 +144,6 @@ div.testStatus.pass button.callToAction div.subtitle span {
 }
 div.testStatus.pass button.callToAction div.button {
   background-color: #FFC618 ;
-}
-div.testStatus.fail div.siteInfo {
-  background-color: #1A0C0C ;
 }
 div.testStatus.fail button.callToAction {
   background-color: #B75757 ;

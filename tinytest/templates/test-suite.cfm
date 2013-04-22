@@ -1,35 +1,7 @@
 
 <cfscript>
 
-	
-	function testing() {
 
-		throw( type = "foobar" );
-
-	}
-
-
-	try {
-
-		testing();
-		
-	} catch( any error ){ 
-
-		// writeDump(error);
-
-		e = new tinytest.lib.Error( error );
-
-		writeDump( e.getErrorMessage() );
-		writeDump( e.getStackTrace() );
-
-
-
-	}
-
-
-
-	abort;
-	
 	param name="form.submitted" type="boolean" default=false;
 	param name="form.selectedTestCases" type="string" default="";
 
@@ -40,8 +12,6 @@
 
 
 	mode = "start";
-	statusClass = "start";
-	statusLabel = "Start";
 
 
 	if ( form.submitted ) {
@@ -57,16 +27,14 @@
 		if ( testResults.isPassed() ) {
 
 			mode = "pass";
-			statusClass = "pass";
-			statusLabel = "Passed";
 
 		} else {
 
 			mode = "fail";
-			statusClass = "fail";
-			statusLabel = "Failed";
 
 		}
+
+		mode = "fail";
 
 	}
 
@@ -98,76 +66,96 @@
 			<input type="hidden" name="submitted" value="true" />
 
 
-			<!-- BEGIN: Test Status. -->
-			<div class="testStatus #testStatusClass#">
+			<!-- BEGIN: Site Info. -->
+			<div class="siteInfo">
 
-				<!-- BEGIN: Site Info. -->
-				<div class="siteInfo">
+				<span class="name">
+					TinyTest
+				</span>
 
-					<span class="name">
-						TinyTest
-					</span>
+				<span class="tddMentality">
+					Red - Green - Refactor
+				</span>
 
-					<span class="tddMentality">
-						Red - Green - Refactor
-					</span>
+				<span class="author">
+					by <a href="http://www.bennadel.com" target="bennadelcom">Ben Nadel</a>
+				</span>
 
-					<span class="author">
-						by <a href="http://www.bennadel.com" target="bennadelcom">Ben Nadel</a>
-					</span>
+			</div>
+			<!-- END: Site Info. -->
+
+
+			<!--- BEGIN: Mode Output. --->
+			<cfif ( mode eq "start" )>
+
+
+				<!-- BEGIN: Test Status. -->
+				<div class="testStatus start">
+
+					<button type="submit" class="callToAction">
+
+						<div class="subtitle">
+							<span>Test Driven Development</span>
+						</div>
+
+						<div class="status">
+							Start
+						</div>
+
+						<div class="button">
+							Run Selected Tests
+						</div>
+
+					</button>
 
 				</div>
-				<!-- END: Site Info. -->
-
-				<button type="submit" class="callToAction">
+				<!-- END: Test Status. -->
 
 
-					<!--- BEGIN: Mode Output. --->
-					<cfif ( mode eq "start" )>
+			<cfelseif ( mode eq "pass" )>
 
+
+				<!-- BEGIN: Test Status. -->
+				<div class="testStatus pass">
+
+					<button type="submit" class="callToAction">
 
 						<div class="subtitle">
-							<span>Test Driven Development</span>
+							<span>You Ran X Tests</span>
 						</div>
 
 						<div class="status">
-							#htmlEditFormat( testStatusLabel )#
+							Passed
 						</div>
 
 						<div class="button">
-							Run Selected Tests
+							Run Tests Again
 						</div>
-						
 
-					<cfelseif ( mode eq "pass" )>
+					</button>
 
+				</div>
+				<!-- END: Test Status. -->
+
+
+			<cfelseif ( mode eq "fail")>
+
+
+				<!-- BEGIN: Test Status. -->
+				<div class="testStatus fail">
+
+					<button type="submit" class="callToAction">
 
 						<div class="subtitle">
-							<span>Test Driven Development</span>
+							<span>We Have A Problem</span>
 						</div>
 
 						<div class="status">
-							#htmlEditFormat( testStatusLabel )#
+							Failed
 						</div>
 
 						<div class="button">
-							Run Selected Tests
-						</div>
-
-
-					<cfelseif ( mode eq "fail")>
-
-
-						<div class="subtitle">
-							<span>Test Driven Development</span>
-						</div>
-
-						<div class="status">
-							#htmlEditFormat( testStatusLabel )#
-						</div>
-
-						<div class="button">
-							Run Selected Tests
+							Try Again
 						</div>
 
 						<div class="errorInfo">
@@ -186,15 +174,14 @@
 
 						</div>
 
+					</button>
 
-					</cfif>
-					<!--- END: Mode Output. --->
+				</div>
+				<!-- END: Test Status. -->
 
 
-				</button>
-
-			</div>
-			<!-- END: Test Status. -->
+			</cfif>
+			<!--- END: Mode Output. --->
 
 
 			<!-- BEGIN: Test List. -->

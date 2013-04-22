@@ -78,45 +78,50 @@ form {
 	margin: 0px 0px 0px 0px ;
 }
 
-div.testStatus {
-	border-bottom: 30px solid #EDF3F3 ;
-	margin-bottom: 30px ;
+div.siteInfo {
+	background-color: #161616 ;
+	color: #C4CBCE ;
+	font-size: 14px ;
+	font-weight: 100 ;
+	height: 30px ;
+	line-height: 30px ;
+	position: relative ;
 
-	div.siteInfo {
-		color: #C4CBCE ;
-		font-size: 14px ;
-		font-weight: 100 ;
-		height: 30px ;
-		line-height: 30px ;
-		position: relative ;
+	span.name {
+		left: 20px ;
+		position: absolute ;
+		text-transform: uppercase ;
+		top: 0px ;
+		z-index: 2 ;
+	}
 
-		span.name {
-			left: 20px ;
-			position: absolute ;
+	span.tddMentality {
+		display: block ;
+		text-align: center ;
+		text-transform: uppercase ;
+	}
+
+	span.author {
+		position: absolute ;
+		right: 20px ;
+		top: 0px ;
+		z-index: 2 ;
+
+		a {
+			color: inherit ;
+			text-decoration: none ;
 			text-transform: uppercase ;
-			top: 0px ;
-			z-index: 2 ;
-		}
 
-		span.tddMentality {
-			display: block ;
-			text-align: center ;
-			text-transform: uppercase ;
-		}
-
-		span.author {
-			position: absolute ;
-			right: 20px ;
-			top: 0px ;
-			z-index: 2 ;
-
-			a {
-				color: inherit ;
-				text-decoration: none ;
-				text-transform: uppercase ;
+			&:hover {
+				text-decoration: underline ;
 			}
 		}
 	}
+}
+
+div.testStatus {
+	border-bottom: 30px solid #EDF3F3 ;
+	margin-bottom: 30px ;
 
 	button.callToAction {
 		border: none ;
@@ -198,10 +203,6 @@ div.testStatus {
 	// div.testStatus -- variations.
 
 	&.start {
-		div.siteInfo {
-			background-color: #121A1D ;
-		}
-
 		button.callToAction {
 			background-color: #709DB0 ;
 
@@ -224,10 +225,6 @@ div.testStatus {
 	}
 
 	&.pass {
-		div.siteInfo {
-			background-color: #181A0C ;
-		}
-
 		button.callToAction {
 			background-color: #88934B ;
 
@@ -250,10 +247,6 @@ div.testStatus {
 	}
 
 	&.fail {
-		div.siteInfo {
-			background-color: #1A0C0C ;
-		}
-
 		button.callToAction {
 			background-color: #B75757 ;
 
