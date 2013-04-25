@@ -8,7 +8,7 @@
 
 	testSuite = new tinytest.lib.TestSuite( this.mappings[ "/specs" ] );
 
-	testCases = testSuite.getTestCases();
+	testCaseNames = testSuite.getTestCaseNames();
 
 	testStatus = "start";
 
@@ -136,7 +136,7 @@
 					<button type="submit" class="callToAction">
 
 						<div class="subtitle">
-							<span>We Have A Problem</span>
+							<span>You Ran #numberFormat( testResults.getTestCount(), "," )# Tests In #numberFormat( testResults.getDuration(), "," )# ms</span>
 						</div>
 
 						<div class="status">
@@ -157,15 +157,15 @@
 								index="stackItem"
 								array="#testResults.getError().getStackTrace()#">
 									
-								<!--- Ignore some "noise" items. --->
-								<cfif listFindNoCase( "Application.cfc,test-suite.cfm", stackItem.filename )>
+								<!--- Ignore some aspects of the stack trace that are not relevant to the user's error. --->
+								<cfif listFindNoCase( "Application.cfc,test-suite.cfm,TestSuite.cfc,TestCase.cfc", stackItem.fileName )>
 									
 									<cfcontinue />
 
 								</cfif>
 
-								<div class="file">
-									#stackItem.filename# : Line #stackItem.lineNumber#
+								<div title="#htmlEditFormat( stackItem.filePath )#" class="file">
+									#stackItem.fileName# : Line #stackItem.lineNumber#
 								</div>
 
 							</cfloop>		
@@ -192,7 +192,7 @@
 				<div class="header">
 
 					<div class="title">
-						<span class="text">You Have #arrayLen( testCases )# Test Cases</span>
+						<span class="text">You Have #arrayLen( testCaseNames )# Test Cases</span>
 						<span class="selectAll">( <a href="##">Select All</a> )</span>
 					</div>
 
@@ -203,8 +203,8 @@
 				<ol class="tests">
 
 					<cfloop 
-						index="testCase"
-						array="#testCases#">
+						index="testCaseName"
+						array="#testCaseNames#">
 						
 						<li class="test">
 
@@ -213,13 +213,13 @@
 								<input 
 									type="checkbox"
 									name="selectedTestCases"
-									value="#htmlEditFormat( testCase )#" 
-									<cfif listFind( form.selectedTestCases, testCase )>
+									value="#htmlEditFormat( testCaseName )#" 
+									<cfif listFind( form.selectedTestCases, testCaseName )>
 										checked="checked"
 									</cfif>
 									/>
 
-								#htmlEditFormat( testCase )#
+								#htmlEditFormat( testCaseName )#
 
 							</label>
 

@@ -17,23 +17,16 @@ component
 	// ---
 
 
-	public string function getName() {
-
-		var componentName = getMetaData( this ).name;
-
-		var fileName = listLast( componentName, "." );
-
-		return( fileName );
-
-	}
-
-
 	public void function setup() {
+
+		// This can be overridden by the user's sub-class.
 
 	}
 
 
 	public void function teardown() {
+
+		// This can be overridden by the user's sub-class.
 
 	}
 

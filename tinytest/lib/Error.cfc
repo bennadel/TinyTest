@@ -89,16 +89,15 @@ component
 
 		for ( var tagContext in exception.tagContext ) {
 
-			var filename = getFileFromPath( tagContext.template );
-
 			// For generated templates, this will not be a file path. This is caused by the
 			// use of the evaluate() method to invoke a compoonent method.
-			if ( filename != "<generated>" ) {
+			if ( isPhysicalTemplatePath( tagContext.template ) ) {
 
 				arrayAppend(
 					simplifiedContext,
 					{
-						filename = filename,
+						fileName = getFileFromPath( tagContext.template ),
+						filePath = tagContext.template,
 						lineNumber = tagContext.line
 					}
 				);
@@ -108,6 +107,13 @@ component
 		}
 
 		return( simplifiedContext );
+
+	}
+
+
+	private boolean function isPhysicalTemplatePath( required string templatePath ) {
+
+		return( templatePath != "<generated>" );
 
 	}
 
