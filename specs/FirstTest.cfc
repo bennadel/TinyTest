@@ -1,7 +1,7 @@
 component
 	extends = "TestCase"
 	output = false
-	hint = ""
+	hint = "I test a given component or module."
 	{
 
 

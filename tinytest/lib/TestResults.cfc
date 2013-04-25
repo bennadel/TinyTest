@@ -40,7 +40,7 @@ component
 	}
 
 
-	public void function endTestingWithError( required any error ) {
+	public void function endTestingWithError( required tinytest.lib.Error error ) {
 
 		if ( isComplete() ) {
 

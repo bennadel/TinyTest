@@ -45,15 +45,15 @@ component
 
 		try {
 
-			for ( var testCase in getTestCaseNames() ) {
+			for ( var testCaseName in getTestCaseNames() ) {
 
-				if ( ! listFind( testCaseList, testCase ) ) {
+				if ( ! listFind( testCaseList, testCaseName ) ) {
 
 					continue;
 
 				}
 
-				runTests( new "specs.#testCase#"() );
+				runTestsInTestCase( new "specs.#testCaseName#"() );
 
 			}
 
@@ -96,13 +96,7 @@ component
 
 	private boolean function isTestMethodName( required string methodName ) {
 
-		return( methodNameStartsWithTest( methodName ) );
-
-	}
-
-
-	private boolean function methodNameStartsWithTest( required string methodName ) {
-		
+		// All test methods must start with the term, "test". 
 		return( !! reFindNoCase( "^test", methodName ) );
 
 	}
@@ -122,7 +116,7 @@ component
 	}
 
 
-	public void function runTests( required any testCase ) {
+	public void function runTestsInTestCase( required any testCase ) {
 
 		for ( var methodName in getTestMethodNames( testCase ) ) {
 
