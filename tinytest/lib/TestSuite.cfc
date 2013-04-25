@@ -39,9 +39,33 @@ component
 
 	public any function runTestCases( required string testCaseList ) {
 
+		var testCases = getTestCases();
+
 		var results = new TestResults();
 
-		results.endTestingWithSuccess();
+		try {
+
+			for ( var testCase in testCases ) {
+
+				if ( ! listFind( testCaseList, testCase ) ) {
+
+					continue;
+
+				}
+
+				var runner = new tinytest.lib.TestCaseRunner( new "specs.#testCase#"(), results );
+
+				runner.runTests();
+
+			}
+
+			results.endTestingWithSuccess();
+
+		} catch ( any error ) {
+
+			results.endTestingWithError( new tinytest.lib.Error( error ) );
+
+		}
 
 		return( results );
 

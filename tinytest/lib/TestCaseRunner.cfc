@@ -4,11 +4,13 @@ component
 	{
 
 
-	public any function init( required any testCase ) {
+	public any function init( 
+		required any testCase,
+		required any testResults
+		) {
 
 		variables.testCase = testCase;
-
-		variables.results = [];
+		variables.testResults = testResults;
 
 		return( this );
 
@@ -22,11 +24,11 @@ component
 
 	public void function runTests() {
 
-		results = [];
-
 		for ( var methodName in getTestMethods() ) {
 
-			arrayAppend( results, runTest( methodName ) );
+			testResults.incrementTestCount();
+
+			runTest( methodName );
 
 		}
 
@@ -36,13 +38,6 @@ component
 	// ---
 	// PRIVATE METHODS.
 	// ---
-
-
-	private string function getErrorMessage( required any error ) {
-
-		return( error.message );
-		
-	}
 
 
 	private array function getTestMethods() {
@@ -64,13 +59,6 @@ component
 	}
 
 
-	private void function invokeTestMethod( required string methodName ) {
-
-		evaluate( "testCase.#methodName#()" );
-
-	}
-
-
 	private boolean function isTestMethodName( required string methodName ) {
 
 		return( methodNameStartsWithTest( methodName ) );
@@ -85,25 +73,13 @@ component
 	}
 
 
-	private any function runTest( required string methodName ) {
+	private void function runTest( required string methodName ) {
 
-		var result = new TestResult( methodName );
+		testCase.setup();
 
-		result.startTest();
+		evaluate( "testCase.#methodName#()" );
 
-		try {
-
-			invokeTestMethod( methodName );
-
-			result.endTestWithSuccess();
-
-		} catch ( any error ) {
-
-			result.endTestWithFailure( getErrorMessage( error ) );
-
-		}
-
-		return( result );
+		testCase.teardown();
 
 	}
 

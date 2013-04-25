@@ -26,13 +26,6 @@ component
 	// ---
 
 
-	public void function addTest() {
-
-		testCount++;
-
-	}
-
-
 	// I end the tests with a successful conclusion.
 	public void function endTestingWithSuccess() {
 
@@ -82,22 +75,16 @@ component
 	}
 
 
-	public boolean function isComplete() {
+	public void function incrementTestCount() {
 
-		return( endTime != 0 );
+		testCount++;
 
 	}
 
 
-	public void function startTesting() {
+	public boolean function isComplete() {
 
-		if ( isComplete() ) {
-
-			throw( type = "InvalidState", message = "Testing is already complete." );
-
-		}
-
-		startTime = getTickCount();
+		return( endTime != 0 );
 
 	}
 

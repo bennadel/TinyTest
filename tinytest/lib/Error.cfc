@@ -89,13 +89,21 @@ component
 
 		for ( var tagContext in exception.tagContext ) {
 
-			arrayAppend(
-				simplifiedContext,
-				{
-					filename = getFileFromPath( tagContext.template ),
-					lineNumber = tagContext.line
-				}
-			);
+			var filename = getFileFromPath( tagContext.template );
+
+			// For generated templates, this will not be a file path. This is caused by the
+			// use of the evaluate() method to invoke a compoonent method.
+			if ( filename != "<generated>" ) {
+
+				arrayAppend(
+					simplifiedContext,
+					{
+						filename = filename,
+						lineNumber = tagContext.line
+					}
+				);
+				
+			}
 
 		}
 
