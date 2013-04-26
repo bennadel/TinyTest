@@ -3,14 +3,6 @@
 	"use strict";
 
 
-	function focusFilter() {
-
-		dom.filter[ 0 ].focus();
-		dom.filter[ 0 ].select();
-
-	}
-
-
 	function hideAllTestCases() {
 
 		dom.testCases.children().hide();
@@ -167,11 +159,14 @@
 			if ( isEnterKeyEvent( event ) ) {
 
 				selectVisibleTestCases();
+
+				// NOTE: We are not cancelling the event since we want it to trigger a form submission.
 				
 			}
 
 		}
 	);
+
 
 	// Listen to filter changes so we can update the list of test cases.
 	dom.filter.keyup(
@@ -181,6 +176,7 @@
 
 		}
 	);
+
 
 	dom.form.submit(
 		function( event ) {
@@ -199,6 +195,7 @@
 
 		}
 	);
+
 
 	$( window ).keypress(
 		function( event ) {
