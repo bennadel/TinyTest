@@ -1,4 +1,3 @@
-
 component
 	extends = "tinytest.Application"
 	output = false

@@ -1,4 +1,3 @@
-
 component
 	output = false
 	hint = "I provide the base class for unit test cases."
