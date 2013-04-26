@@ -54,6 +54,9 @@
 			<!-- Flag the form as submitted. -->
 			<input type="hidden" name="submitted" value="true" />
 
+			<!-- Track the current test status for JavaScript interactions. -->
+			<input type="hidden" name="testStatus" value="#htmlEditFormat( testStatus )#" />
+
 
 			<!-- BEGIN: Site Info. -->
 			<div class="siteInfo">
@@ -247,7 +250,7 @@
 					<strong>Oops</strong>: There are no test cases in your "specs" directory.<br />
 					
 					See the <a href="./README.md">Readme.md</a> file for instructions.
-					
+
 				</div>
 				<!-- END: No Test List. -->
 

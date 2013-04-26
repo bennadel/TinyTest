@@ -137,6 +137,7 @@
 	// Cache DOM node references.
 	var dom = {
 		form: $( "form" ),
+		testStatus: $( "form input[ name = 'testStatus' ]"),
 		filter: $( "input.filter" ),
 		selectAll: $( "span.selectAll a" ),
 		testCases: $( "div.testList ol.tests" ),
@@ -201,6 +202,13 @@
 
 	$( window ).keypress(
 		function( event ) {
+
+			// We don't care about keypresses while on the start screen.
+			if ( dom.testStatus.val() === "start" ) {
+
+				return;
+
+			}
 
 			if ( isRefreshEvent( event ) ) {
 
