@@ -2,10 +2,13 @@
 <cfscript>
 
 
+	// Param the form fields.
 	param name="form.submitted" type="boolean" default=false;
 	param name="form.selectedTestCases" type="string" default="";
 
 
+	// NOTE: Since this template is included INTO the Application.cfc, we have access to the "this" scope;
+	// and, therefore, have direct access to the mappings collection.
 	testSuite = new tinytest.lib.TestSuite( this.mappings[ "/specs" ] );
 
 	testCaseNames = testSuite.getTestCaseNames();
@@ -13,13 +16,8 @@
 	testStatus = "start";
 
 
-	if ( form.submitted ) {
-
-		if ( ! len( form.selectedTestCases ) ) {
-
-			location( url = cgi.script_name, addToken = false );
-
-		}
+	// Only run the tests if at least one test was selected.
+	if ( form.submitted && len( form.selectedTestCases ) ) {
 
 		testResults = testSuite.runTestCases( form.selectedTestCases );
 
@@ -34,6 +32,7 @@
 <!--- ----------------------------------------------------- --->
 <!--- ----------------------------------------------------- --->
 
+
 <cfcontent type="text/html; charset=utf-8" />
 
 <cfoutput>
@@ -42,6 +41,8 @@
 	<html>
 	<head>
 		<meta charset="utf-8" />
+		<meta name="author" content="Ben Nadel, ben@bennadel.com" />
+
 		<title>Tiny Test : Test-Driven Development</title>
 
 		<link rel="stylesheet" type="text/css" href="tinytest/assets/app/css/test-suite.css"></link>
