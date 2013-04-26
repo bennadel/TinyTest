@@ -186,51 +186,74 @@
 			<!--- END: Status Output. --->
 
 
-			<!-- BEGIN: Test List. -->
-			<div class="testList">
+			<!--- Make sure the user actually has test cases to run. --->
+			<cfif arrayLen( testCaseNames )>
 
-				<div class="header">
 
-					<div class="title">
-						<span class="text">You Have #arrayLen( testCaseNames )# Test Cases</span>
-						<span class="selectAll">( <a href="##">Select All</a> )</span>
+				<!-- BEGIN: Test List. -->
+				<div class="testList">
+
+					<div class="header">
+
+						<div class="title">
+							<span class="text">You Have #arrayLen( testCaseNames )# Test Cases</span>
+							<span class="selectAll">( <a href="##">Select All</a> )</span>
+						</div>
+
+						<input type="text" placeholder="Filter test cases" tabindex="1" class="filter" />
+
 					</div>
 
-					<input type="text" placeholder="Filter test cases" tabindex="1" class="filter" />
+					<ol class="tests">
+
+						<cfloop 
+							index="testCaseName"
+							array="#testCaseNames#">
+							
+							<li class="test">
+
+								<label>
+									
+									<input 
+										type="checkbox"
+										name="selectedTestCases"
+										value="#htmlEditFormat( testCaseName )#" 
+										<cfif listFind( form.selectedTestCases, testCaseName )>
+											checked="checked"
+										</cfif>
+										/>
+
+									#htmlEditFormat( testCaseName )#
+
+								</label>
+
+							</li>
+
+						</cfloop>
+
+					</ol>
 
 				</div>
+				<!-- END: Test List. -->
+				
 
-				<ol class="tests">
+			<!--- There are no test cases available. --->
+			<cfelse>
 
-					<cfloop 
-						index="testCaseName"
-						array="#testCaseNames#">
-						
-						<li class="test">
 
-							<label>
-								
-								<input 
-									type="checkbox"
-									name="selectedTestCases"
-									value="#htmlEditFormat( testCaseName )#" 
-									<cfif listFind( form.selectedTestCases, testCaseName )>
-										checked="checked"
-									</cfif>
-									/>
+				<!-- BEGIN: No Test List. -->
+				<div class="noTestList">
+					
+					<strong>Oops</strong>: There are no test cases in your "specs" directory.<br />
+					
+					See the <a href="./README.md">Readme.md</a> file for instructions.
+					
+				</div>
+				<!-- END: No Test List. -->
 
-								#htmlEditFormat( testCaseName )#
 
-							</label>
-
-						</li>
-
-					</cfloop>
-
-				</ol>
-
-			</div>
-			<!-- END: Test List. -->
+			</cfif>
+			
 
 		</form>
 		<!-- END: Form. -->

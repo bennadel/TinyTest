@@ -270,6 +270,19 @@ div.testList ol.tests input {
   margin-right: 7px ;
   vertical-align: middle ;
 }
+div.noTestList {
+  color: #CC1717 ;
+  font-size: 22px ;
+  line-height: 40px ;
+  margin: 0px 20px 100px 20px ;
+  text-align: center ;
+  font-style: italic ;
+}
+div.noTestList a {
+  border-bottom: 1px dotted #CC1717 ;
+  color: #CC1717 ;
+  text-decoration: none ;
+}
 div.processingOverlay {
   background-color: rgba(255, 255, 255, 0.95);
   bottom: 0px ;
