@@ -5,6 +5,7 @@
 	// Param the form fields.
 	param name="form.submitted" type="boolean" default=false;
 	param name="form.selectedTestCases" type="string" default="";
+	param name="form.autorun" type="string" default="off";
 
 
 	// NOTE: Since this template is included INTO the Application.cfc, we have access to the "this" scope;
@@ -260,6 +261,20 @@
 
 
 			</cfif>
+
+
+			<!-- BEGIN: Auto-Run. -->
+			<label for="autorun" class="autorun <cfif ( form.autorun eq "on" )>on</cfif>">
+
+				<input id="autorun" type="checkbox" name="autorun" value="on"
+					<cfif ( form.autorun eq "on" )>
+						checked="checked"
+					</cfif>
+					/>
+				Auto-run tests when window is focused.
+
+			</label>
+			<!-- END: Auto-Run. -->
 			
 
 		</form>

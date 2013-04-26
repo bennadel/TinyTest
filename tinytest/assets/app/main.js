@@ -133,8 +133,10 @@
 		filter: $( "input.filter" ),
 		selectAll: $( "span.selectAll a" ),
 		testCases: $( "div.testList ol.tests" ),
+		autorun: $( "label.autorun input" ),
 		processingOverlay: $( "div.processingOverlay" ),
-		processingCount: $( "div.processingOverlay span.count" )
+		processingCount: $( "div.processingOverlay span.count" ),
+		window: $( window )
 	};
 
 
@@ -178,14 +180,45 @@
 	);
 
 
+	dom.autorun.click(
+		function( event ) {
+
+			var label = dom.autorun.closest( "label" );
+
+			if ( this.checked ) {
+
+				label.addClass( "on" );
+
+			} else {
+
+				label.removeClass( "on" );
+
+			}
+
+		}
+	);
+
+
+	// We want to prevent double-submission, so we have to track the active submission.
+	var isFormSubmitting = false;
+
 	dom.form.submit(
 		function( event ) {
+
+			// If the form is already submitting, completely cancel the event.
+			if ( isFormSubmitting ) {
+
+				return( false );
+
+			}
 
 			var selectedTestCases = getSelectedTestCases();
 
 			if ( selectedTestCases.length ) {
 
 				showProcessingOverlay( selectedTestCases.length );
+
+				isFormSubmitting = true;
 
 			} else {
 
@@ -197,7 +230,7 @@
 	);
 
 
-	$( window ).keypress(
+	dom.window.keypress(
 		function( event ) {
 
 			// We don't care about keypresses while on the start screen.
@@ -213,6 +246,37 @@
 				// resubmitted (for security reasons). Since we just want to resubmit the
 				// data, this will remove that friction.
 				event.preventDefault();
+
+				dom.form.submit();
+
+			}
+
+		}
+	);
+
+
+	// When the window refreshes, it will "gain focus" on load. As such, we want to ignore the
+	// first focus event or we will get stuck in a crazy form-submission loop.
+	var isFirstFocusEvent = true;
+
+	dom.window.focus(
+		function( event ) {
+			
+			// We only care about re-running the tests if the form has already been submitted.
+			if ( dom.testStatus.val() === "start" ) {
+
+				return;
+
+			}
+
+			if ( isFirstFocusEvent ) {
+
+				isFirstFocusEvent = false;
+				return;
+
+			}
+
+			if ( dom.autorun.is( ":checked" ) ) {
 
 				dom.form.submit();
 

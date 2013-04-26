@@ -283,6 +283,29 @@ div.noTestList a {
   color: #CC1717 ;
   text-decoration: none ;
 }
+label.autorun {
+  background-color: #F0F0F0 ;
+  -webkit-border-radius: 0px 4px 0px 0px;
+  -moz-border-radius: 0px 4px 0px 0px;
+  border-radius: 0px 4px 0px 0px;
+  bottom: 0px ;
+  color: #666666 ;
+  cursor: pointer ;
+  font-size: 11px ;
+  left: 0px ;
+  line-height: 15px ;
+  padding: 4px 12px 3px 3px ;
+  position: fixed ;
+  z-index: 2 ;
+}
+label.autorun:hover {
+  background-color: #333333 ;
+  color: #FFFFFF ;
+}
+label.autorun.on {
+  background-color: #333333 ;
+  color: #FFFFFF ;
+}
 div.processingOverlay {
   background-color: rgba(255, 255, 255, 0.95);
   bottom: 0px ;
