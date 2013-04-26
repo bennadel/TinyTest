@@ -6,9 +6,13 @@ component
 	{
 
 
+	// Set up any datasource your application might need.
+	this.datasource = "yourAppDatasource";
+
 	// Add any mappings that you need in order to load your modules from within
 	// the unit test specifications.
 	this.mappings[ "/yourAppRoot" ] = evaluatePathTraversal( "../" );
+	this.mappings[ "/yourAppLib" ] = evaluatePathTraversal( "../lib/" );
 
 
 }

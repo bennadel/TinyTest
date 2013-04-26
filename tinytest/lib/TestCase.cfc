@@ -17,16 +17,18 @@ component
 	// ---
 
 
+	// I get called before every test method.
 	public void function setup() {
 
-		// This can be overridden by the user's sub-class.
+		// Abstract method...
 
 	}
 
 
+	// I get called after every test method.
 	public void function teardown() {
 
-		// This can be overridden by the user's sub-class.
+		// Abstract method...
 
 	}
 
@@ -36,6 +38,7 @@ component
 	// ---
 
 
+	// I am a short-hand for the assertTrue() method.
 	private void function assert( required boolean value ) {
 
 		assertTrue( value );
@@ -43,14 +46,14 @@ component
 	}
 
 
-	private void function assertEqual( 
+	private void function assertEquals( 
 		required string valueA,
 		required string valueB
 		) {
 
 		if ( valueA != valueB ) {
 
-			throwAssertionError( "Expected [#valueA#] to equal [#valueB#]." );
+			fail( "Expected [#valueA#] to equal [#valueB#]." );
 
 		}
 
@@ -61,21 +64,21 @@ component
 
 		if ( value ) {
 
-			throwAssertionError( "Expected [#value#] to be falsey." );
+			fail( "Expected [#value#] to be falsey." );
 
 		}
 
 	}
 
 
-	private void function assertNotEqual( 
+	private void function assertNotEquals( 
 		required string valueA,
 		required string valueB
 		) {
 
 		if ( valueA == valueB ) {
 
-			throwAssertionError( "Expected [#valueA#] to not equal [#valueB#]." );
+			fail( "Expected [#valueA#] to not equal [#valueB#]." );
 
 		}
 
@@ -86,14 +89,14 @@ component
 
 		if ( ! value ) {
 
-			throwAssertionError( "Expected [#value#] to be truthy." );
+			fail( "Expected [#value#] to be truthy." );
 
 		}
 
 	}
 
 
-	private void function throwAssertionError( required string message ) {
+	private void function fail( required string message ) {
 
 		throw( type = "tinytest.AssertionFailed", message = message );
 

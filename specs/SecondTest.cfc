@@ -14,13 +14,7 @@ component
 
 	public void function testThatThatRuns() {
 
-		
-		var badComponent = new BadComponent();
-
-		// assertTrue( badComponent.returnTrue() );
-
-		badComponent.throwError();
-
+		assert( true == false );
 
 	}
 

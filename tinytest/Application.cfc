@@ -17,7 +17,7 @@ component
 	// tests since the functionality can be tested with successive assertions.
 	this.sessionManagement = false;
 
-	// Turn off client cookies-  you don't need cookes to run unit tests since the 
+	// Turn off client cookies - you don't need cookes to run unit tests since the 
 	// functionality can be tested with successive assertions.
 	this.setClientCookies = false;
 

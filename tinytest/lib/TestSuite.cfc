@@ -79,6 +79,7 @@ component
 
 		var methodNames = [];
 
+		// structKeyArray() will make sure that only public methods are picked up.
 		for ( var methodName in structKeyArray( testCase ) ) {
 
 			if ( isTestMethodName( methodName ) ) {

@@ -9,7 +9,7 @@ component
 		errorMessage = getErrorFromException( exception );
 
 		stackTrace = getStackTraceFromException( exception );
-
+		
 		fullStackTrace = getFullStackTraceFromException( exception );
 
 		return( this );
