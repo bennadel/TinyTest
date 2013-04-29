@@ -34,6 +34,7 @@
 <!--- ----------------------------------------------------- --->
 
 
+<!--- Reset the output buffer. --->
 <cfcontent type="text/html; charset=utf-8" />
 
 <cfoutput>
