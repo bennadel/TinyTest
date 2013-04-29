@@ -7,7 +7,11 @@ component
 
 	public void function testThatThisRuns() {
 
-		// Runs successfully...
+		// Runs failure... if you uncomment any of the following.
+
+		// assert( true == false );
+		// assertIsValidEmail( "ben nadel" );
+		// assertIsValidEmail( "ben@bennadel.com" );
 	
 	}
 
