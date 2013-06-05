@@ -50,7 +50,7 @@ component
 
 		endTime = getTickCount();
 
-		variables.error = error;
+		variables.error = arguments.error;
 
 	}
 

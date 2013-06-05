@@ -4,6 +4,13 @@ component
 	hint = "I test a given component or module."
 	{
 
+	public void function beforeTests(){
+		application.bogus = 1;
+	}
+
+	public void function afterTests(){
+		structClear( application );
+	}
 
 	public void function testThatThisRuns() {
 
@@ -12,7 +19,9 @@ component
 		// assert( true == false );
 		// assertIsValidEmail( "ben nadel" );
 		// assertIsValidEmail( "ben@bennadel.com" );
-	
+		//fail('test');
+		
+		assert( application.bogus == 1 );
 	}
 
 

@@ -7,7 +7,7 @@ component
 
 	public any function init( required string testDirectory ) {
 
-		variables.testDirectory = testDirectory;
+		variables.testDirectory = arguments.testDirectory;
 
 		variables.results = "";
 
@@ -42,12 +42,13 @@ component
 	public any function runTestCases( required string testCaseList ) {
 
 		results = new TestResults();
+		var testCases = getTestCaseNames();
 
 		try {
 
-			for ( var testCaseName in getTestCaseNames() ) {
+			for ( var testCaseName in testCases ) {
 
-				if ( ! listFind( testCaseList, testCaseName ) ) {
+				if ( ! listFind( arguments.testCaseList, testCaseName ) ) {
 
 					continue;
 
@@ -80,7 +81,7 @@ component
 		var methodNames = [];
 
 		// structKeyArray() will make sure that only public methods are picked up.
-		for ( var methodName in structKeyArray( testCase ) ) {
+		for ( var methodName in structKeyArray( arguments.testCase ) ) {
 
 			if ( isTestMethodName( methodName ) ) {
 
@@ -98,7 +99,7 @@ component
 	private boolean function isTestMethodName( required string methodName ) {
 
 		// All test methods must start with the term, "test". 
-		return( !! reFindNoCase( "^test", methodName ) );
+		return( !! reFindNoCase( "^test", arguments.methodName ) );
 
 	}
 
@@ -108,23 +109,39 @@ component
 		required string methodName 
 		) {
 
-		testCase.setup();
+		arguments.testCase.setup();
 
-		evaluate( "testCase.#methodName#()" );
+		evaluate( "testCase.#arguments.methodName#()" );
 
-		testCase.teardown();
+		arguments.testCase.teardown();
 
 	}
 
 
 	public void function runTestsInTestCase( required any testCase ) {
 
-		for ( var methodName in getTestMethodNames( testCase ) ) {
+		try{
+			// Execute before
+			arguments.testCase.beforeTests();
 
-			results.incrementTestCount();
+			// Execute tests
+			var testMethods = getTestMethodNames( arguments.testCase );
+			for ( var methodName in testMethods ) {
 
-			runTestMethod( testCase, methodName );
+				results.incrementTestCount();
 
+				runTestMethod( arguments.testCase, methodName );
+
+			}
+			
+		}
+		catch(Any e){
+			rethrow;
+		}
+		// Guarantee that after tests run even if exceptions ocurr
+		finally{
+			// Execute after
+			arguments.testCase.afterTests();
 		}
 
 	}
