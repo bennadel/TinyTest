@@ -37,14 +37,21 @@ starts with, "test". For example, the following are all valid test method names:
 Within each test case can define optional methods that run before and / or after each 
 test method:
 
+* beforeTests()
 * setup()
 * teardown()
+* afterTests()
 
 In these methods, you can reset the private variables of your test case to be "pristine" 
 for each invocation of the provided test methods.
 
 Each of your test cases should extend the TestCase.cfc component that ships in the specs
 directory. This is your bridge into the core functionality provided by Tiny Test.
+
+* The 'beforeTests()' method executes **once** before all tests
+* The 'setup()' method executes before **any** test case
+* The 'teardown' method executes after **any** test case
+* The 'afterTests()' method executes **once** after all tests execute, even if they produced failures or exceptions.
 
 ## Assertions
 

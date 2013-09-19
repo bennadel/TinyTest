@@ -15,6 +15,13 @@ component
 	// PUBLIC METHODS.
 	// ---
 
+	// I get called once before all tests
+	public void function beforeTests() {
+
+		// Abstract method...
+
+	}
+
 
 	// I get called before every test method.
 	public void function setup() {
@@ -31,6 +38,13 @@ component
 
 	}
 
+	// I get called once after all tests
+	public void function afterTests() {
+
+		// Abstract method...
+
+	}
+
 
 	// ---
 	// PRIVATE METHODS.
@@ -40,7 +54,7 @@ component
 	// I am a short-hand for the assertTrue() method.
 	private void function assert( required boolean value ) {
 
-		assertTrue( value );
+		assertTrue( arguments.value );
 
 	}
 
@@ -50,9 +64,9 @@ component
 		required string valueB
 		) {
 
-		if ( valueA != valueB ) {
+		if ( arguments.valueA != arguments.valueB ) {
 
-			fail( "Expected [#valueA#] to equal [#valueB#]." );
+			fail( "Expected [#arguments.valueA#] to equal [#arguments.valueB#]." );
 
 		}
 
@@ -61,9 +75,9 @@ component
 
 	private void function assertFalse( required boolean value ) {
 
-		if ( value ) {
+		if ( arguments.value ) {
 
-			fail( "Expected [#value#] to be falsey." );
+			fail( "Expected [#arguments.value#] to be falsey." );
 
 		}
 
@@ -75,9 +89,9 @@ component
 		required string valueB
 		) {
 
-		if ( valueA == valueB ) {
+		if ( arguments.valueA == varguments.alueB ) {
 
-			fail( "Expected [#valueA#] to not equal [#valueB#]." );
+			fail( "Expected [#arguments.valueA#] to not equal [#arguments.valueB#]." );
 
 		}
 
@@ -86,9 +100,9 @@ component
 
 	private void function assertTrue( required boolean value ) {
 
-		if ( ! value ) {
+		if ( ! arguments.value ) {
 
-			fail( "Expected [#value#] to be truthy." );
+			fail( "Expected [#arguments.value#] to be truthy." );
 
 		}
 
@@ -97,7 +111,7 @@ component
 
 	private void function fail( required string message ) {
 
-		throw( type = "tinytest.AssertionFailed", message = message );
+		throw( type = "tinytest.AssertionFailed", message = arguments.message );
 
 	}
 
