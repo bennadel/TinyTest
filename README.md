@@ -13,6 +13,13 @@ If you want a more full-featured unit testing framework, I would suggest looking
 [MXUnit][2]; it's a robust unit testing framework that has been battle-hardened for years
 by the ColdFusion community.
 
+## Railo Compatibility
+
+Railo's ColdFusion engine has some settings that require you to use explicit Arguments 
+and Variables scope references. Since I am doubtful that I can be mindful of this, I 
+have created a separate [Railo branch][3] branch. As features are added here, they will
+be cherry-picked into the Railo branch to keep the two in sync.
+
 ## Specs Directory
 
 Tiny Test will look in the "specs" directory for your test cases. It will attempt to run
@@ -79,3 +86,4 @@ Hopefully you've found some of this vaguely interesting.
 
 [1]: http://www.bennadel.com
 [2]: http://mxunit.org
+[3]: https://github.com/bennadel/TinyTest/tree/railo
