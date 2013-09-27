@@ -91,7 +91,7 @@ component
 		required string valueB
 		) {
 
-		if ( arguments.valueA == varguments.alueB ) {
+		if ( arguments.valueA == arguments.valueB ) {
 
 			fail( "Expected [#arguments.valueA#] to not equal [#arguments.valueB#]." );
 
