@@ -164,14 +164,14 @@
 								array="#testResults.getError().getStackTrace()#">
 									
 								<!---
-									Ignore some aspects of the stack trace that are not relevant to the user's error.
-									These include both ColdFusion and Tiny Test framework files.
+									Ignore some aspects of the stack trace that are not relevant to the 
+									user's error. These include both ColdFusion and Tiny Test framework files.
+								--->
 								<cfif listFindNoCase( "Application.cfc,test-suite.cfm,TestSuite.cfc,TestCase.cfc", stackItem.fileName )>
 									
 									<cfcontinue />
 
 								</cfif>
-								--->
 								
 								<div title="#htmlEditFormat( stackItem.filePath )#" class="file">
 									#stackItem.fileName# : Line #stackItem.lineNumber#

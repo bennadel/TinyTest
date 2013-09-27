@@ -3,7 +3,7 @@ component
 	hint = "I provide the base class for unit test cases."
 	{
 
-
+	// I initialize the component.
 	public any function init() {
 
 		return( this );
@@ -15,7 +15,16 @@ component
 	// PUBLIC METHODS.
 	// ---
 
-	// I get called once before all tests
+
+	// I get called once after all the test methods have executed.
+	public void function afterTests() {
+
+		// Abstract method...
+
+	}
+
+
+	// I get called once before any tests methods have executed.
 	public void function beforeTests() {
 
 		// Abstract method...
@@ -23,7 +32,7 @@ component
 	}
 
 
-	// I get called before every test method.
+	// I get called before every test method is executed.
 	public void function setup() {
 
 		// Abstract method...
@@ -31,15 +40,8 @@ component
 	}
 
 
-	// I get called after every test method.
+	// I get called after every test method has executed.
 	public void function teardown() {
-
-		// Abstract method...
-
-	}
-
-	// I get called once after all tests
-	public void function afterTests() {
 
 		// Abstract method...
 
@@ -114,6 +116,5 @@ component
 		throw( type = "tinytest.AssertionFailed", message = arguments.message );
 
 	}
-
 
 }

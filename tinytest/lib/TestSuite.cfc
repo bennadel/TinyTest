@@ -4,7 +4,7 @@ component
 	hint = "I run a suite of test cases."
 	{
 
-
+	// I initialize the component.
 	public any function init( required string testDirectory ) {
 
 		variables.testDirectory = arguments.testDirectory;
@@ -42,6 +42,7 @@ component
 	public any function runTestCases( required string testCaseList ) {
 
 		results = new TestResults();
+		
 		var testCases = getTestCaseNames();
 
 		try {
@@ -120,12 +121,14 @@ component
 
 	public void function runTestsInTestCase( required any testCase ) {
 
-		try{
-			// Execute before
-			arguments.testCase.beforeTests();
+		arguments.testCase.beforeTests();
 
-			// Execute tests
+		// When running the tests, we want to stop on failure; however, we also want to make
+		// sure that we always run the after-tests teardown.
+		try {			
+
 			var testMethods = getTestMethodNames( arguments.testCase );
+
 			for ( var methodName in testMethods ) {
 
 				results.incrementTestCount();
@@ -134,14 +137,17 @@ component
 
 			}
 			
-		}
-		catch(Any e){
+		// Rethrow errors - we want to prevent future tests.
+		} catch( any error ) {
+
 			rethrow;
-		}
-		// Guarantee that after tests run even if exceptions ocurr
-		finally{
+
+		// Guarantee that after tests run.
+		} finally {
+			
 			// Execute after
 			arguments.testCase.afterTests();
+
 		}
 
 	}
