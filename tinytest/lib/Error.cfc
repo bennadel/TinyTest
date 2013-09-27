@@ -6,11 +6,11 @@ component
 
 	public any function init( required any exception ) {
 
-		errorMessage = getErrorFromException( arguments.exception );
+		errorMessage = getErrorFromException( exception );
 
-		stackTrace = getStackTraceFromException( arguments.exception );
+		stackTrace = getStackTraceFromException( exception );
 		
-		fullStackTrace = getFullStackTraceFromException( arguments.exception );
+		fullStackTrace = getFullStackTraceFromException( exception );
 
 		return( this );
 
@@ -51,35 +51,35 @@ component
 	private string function getErrorFromException( required any exception ) {
 
 		if ( 
-			! structKeyExists( arguments.exception, "message" ) ||
-			! len( arguments.exception.message )
+			! structKeyExists( exception, "message" ) ||
+			! len( exception.message )
 			) {
 
 			return( "An unexpected error has occurred." );
 
 		}
 
-		return( arguments.exception.message );
+		return( exception.message );
 
 	}
 
 
 	private string function getFullStackTraceFromException( required any exception ) {
 		
-		if ( ! structKeyExists( arguments.exception, "stackTrace" ) ) {
+		if ( ! structKeyExists( exception, "stackTrace" ) ) {
 
 			return( "" );
 
 		}
 		
-		return( arguments.exception.stackTrace );
+		return( exception.stackTrace );
 
 	}
 
 
 	private array function getStackTraceFromException( required any exception ) {
 
-		if ( ! structKeyExists( arguments.exception, "tagContext" ) ) {
+		if ( ! structKeyExists( exception, "tagContext" ) ) {
 
 			return( arrayNew( 1 ) );
 
@@ -87,7 +87,7 @@ component
 
 		var simplifiedContext = [];
 
-		for ( var tagContext in arguments.exception.tagContext ) {
+		for ( var tagContext in exception.tagContext ) {
 
 			// For generated templates, this will not be a file path. This is caused by the
 			// use of the evaluate() method to invoke a compoonent method.
@@ -113,7 +113,7 @@ component
 
 	private boolean function isPhysicalTemplatePath( required string templatePath ) {
 
-		return( arguments.templatePath != "<generated>" );
+		return( templatePath != "<generated>" );
 
 	}
 

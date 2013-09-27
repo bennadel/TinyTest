@@ -56,7 +56,7 @@ component
 	// I am a short-hand for the assertTrue() method.
 	private void function assert( required boolean value ) {
 
-		assertTrue( arguments.value );
+		assertTrue( value );
 
 	}
 
@@ -66,9 +66,9 @@ component
 		required string valueB
 		) {
 
-		if ( arguments.valueA != arguments.valueB ) {
+		if ( valueA != valueB ) {
 
-			fail( "Expected [#arguments.valueA#] to equal [#arguments.valueB#]." );
+			fail( "Expected [#valueA#] to equal [#valueB#]." );
 
 		}
 
@@ -77,9 +77,9 @@ component
 
 	private void function assertFalse( required boolean value ) {
 
-		if ( arguments.value ) {
+		if ( value ) {
 
-			fail( "Expected [#arguments.value#] to be falsey." );
+			fail( "Expected [#value#] to be falsey." );
 
 		}
 
@@ -91,9 +91,9 @@ component
 		required string valueB
 		) {
 
-		if ( arguments.valueA == varguments.alueB ) {
+		if ( valueA == valueB ) {
 
-			fail( "Expected [#arguments.valueA#] to not equal [#arguments.valueB#]." );
+			fail( "Expected [#valueA#] to not equal [#valueB#]." );
 
 		}
 
@@ -102,9 +102,9 @@ component
 
 	private void function assertTrue( required boolean value ) {
 
-		if ( ! arguments.value ) {
+		if ( ! value ) {
 
-			fail( "Expected [#arguments.value#] to be truthy." );
+			fail( "Expected [#value#] to be truthy." );
 
 		}
 
@@ -113,7 +113,7 @@ component
 
 	private void function fail( required string message ) {
 
-		throw( type = "tinytest.AssertionFailed", message = arguments.message );
+		throw( type = "tinytest.AssertionFailed", message = message );
 
 	}
 

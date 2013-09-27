@@ -7,9 +7,9 @@ component
 	// I initialize the component.
 	public any function init( required string testDirectory ) {
 
-		variables.testDirectory = arguments.testDirectory;
+		variables.testDirectory = testDirectory;
 
-		variables.results = "";
+		results = "";
 
 		return( this );
 
@@ -49,7 +49,7 @@ component
 
 			for ( var testCaseName in testCases ) {
 
-				if ( ! listFind( arguments.testCaseList, testCaseName ) ) {
+				if ( ! listFind( testCaseList, testCaseName ) ) {
 
 					continue;
 
@@ -82,7 +82,7 @@ component
 		var methodNames = [];
 
 		// structKeyArray() will make sure that only public methods are picked up.
-		for ( var methodName in structKeyArray( arguments.testCase ) ) {
+		for ( var methodName in structKeyArray( testCase ) ) {
 
 			if ( isTestMethodName( methodName ) ) {
 
@@ -100,7 +100,7 @@ component
 	private boolean function isTestMethodName( required string methodName ) {
 
 		// All test methods must start with the term, "test". 
-		return( !! reFindNoCase( "^test", arguments.methodName ) );
+		return( !! reFindNoCase( "^test", methodName ) );
 
 	}
 
@@ -110,30 +110,30 @@ component
 		required string methodName 
 		) {
 
-		arguments.testCase.setup();
+		testCase.setup();
 
-		evaluate( "testCase.#arguments.methodName#()" );
+		evaluate( "testCase.#methodName#()" );
 
-		arguments.testCase.teardown();
+		testCase.teardown();
 
 	}
 
 
 	public void function runTestsInTestCase( required any testCase ) {
 
-		arguments.testCase.beforeTests();
+		testCase.beforeTests();
 
 		// When running the tests, we want to stop on failure; however, we also want to make
 		// sure that we always run the after-tests teardown.
 		try {			
 
-			var testMethods = getTestMethodNames( arguments.testCase );
+			var testMethods = getTestMethodNames( testCase );
 
 			for ( var methodName in testMethods ) {
 
 				results.incrementTestCount();
 
-				runTestMethod( arguments.testCase, methodName );
+				runTestMethod( testCase, methodName );
 
 			}
 			
@@ -146,7 +146,7 @@ component
 		} finally {
 			
 			// Execute after
-			arguments.testCase.afterTests();
+			testCase.afterTests();
 
 		}
 
