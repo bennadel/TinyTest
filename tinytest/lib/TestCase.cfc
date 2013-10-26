@@ -3,7 +3,10 @@ component
 	hint = "I provide the base class for unit test cases."
 	{
 
-	// I initialize the component.
+	/**
+	* @hint I initialize the component.
+	* @output false
+	*/
 	public any function init() {
 
 		return( this );
@@ -16,7 +19,10 @@ component
 	// ---
 
 
-	// I get called once after all the test methods have executed.
+	/**
+	* @hint I get called once after all the test methods have executed.
+	* @output false
+	*/
 	public void function afterTests() {
 
 		// Abstract method...
@@ -24,7 +30,10 @@ component
 	}
 
 
-	// I get called once before any tests methods have executed.
+	/**
+	* @hint I get called once before any tests methods have executed.
+	* @output false
+	*/
 	public void function beforeTests() {
 
 		// Abstract method...
@@ -32,7 +41,10 @@ component
 	}
 
 
-	// I get called before every test method is executed.
+	/**
+	* @hint I get called before every test method is executed.
+	* @output false
+	*/
 	public void function setup() {
 
 		// Abstract method...
@@ -40,7 +52,10 @@ component
 	}
 
 
-	// I get called after every test method has executed.
+	/**
+	* @hint I get called after every test method has executed.
+	* @output false
+	*/
 	public void function teardown() {
 
 		// Abstract method...
@@ -53,68 +68,163 @@ component
 	// ---
 
 
-	// I am a short-hand for the assertTrue() method.
-	private void function assert( required boolean value ) {
+	/**
+	* @hint I am a short-hand for the assertTrue() method.
+	* @output false
+	* @value A True or False value that will be passed on to the assertTrue method
+	* @additionalInfo If provided, this value will be output along with the failure message if the value is False
+	*/
+	private void function assert(
+		required boolean value,
+		string additionalInfo = ""
+	) {
 
-		assertTrue( value );
+		assertTrue( ArgumentCollection = Arguments );
 
 	}
 
 
-	private void function assertEquals( 
+	/**
+	* @hint I test to see if the supplied values are equal or not
+	* @output false
+	* @valueA The first value to be compared
+	* @valueB The value to compare against valueA
+	* @additionalInfo If provided, this value will be output along with the failure message if the valueA and valueB are not equal
+	*/
+	private void function assertEquals(
 		required string valueA,
-		required string valueB
-		) {
+		required string valueB,
+		string additionalInfo = ""
+	) {
 
 		if ( valueA != valueB ) {
 
-			fail( "Expected [#valueA#] to equal [#valueB#]." );
+			fail( "Expected [#valueA#] to equal [#valueB#]", Arguments.additionalInfo );
 
 		}
 
 	}
 
 
-	private void function assertFalse( required boolean value ) {
+	/**
+	* @hint I test to see if the supplied value is equal to False
+	* @output false
+	* @value A True or False value to test
+	* @additionalInfo If provided, this value will be output along with the failure message if the supplied value is True
+	*/
+	private void function assertFalse(
+		required boolean value,
+		string additionalInfo = ""
+	 ) {
 
 		if ( value ) {
 
-			fail( "Expected [#value#] to be falsey." );
+			fail( "Expected [#value#] to be falsey", Arguments.additionalInfo );
 
 		}
 
 	}
 
 
-	private void function assertNotEquals( 
+	/**
+	* @hint I test to see if the supplied values are equal or not
+	* @output false
+	* @valueA The first value to be compared
+	* @valueB The value to compare against valueA
+	* @additionalInfo If provided, this value will be output along with the failure message if the valueA and valueB are equal
+	*/
+	private void function assertNotEquals(
 		required string valueA,
-		required string valueB
-		) {
+		required string valueB,
+		string additionalInfo = ""
+	) {
 
 		if ( valueA == valueB ) {
 
-			fail( "Expected [#valueA#] to not equal [#valueB#]." );
+			fail( "Expected [#valueA#] to not equal [#valueB#]", Arguments.additionalInfo );
 
 		}
 
 	}
 
 
-	private void function assertTrue( required boolean value ) {
-
+	/**
+	* @hint I test to see if the supplied value is equal to True
+	* @output false
+	* @value A True or False value to test
+	* @additionalInfo If provided, this value will be output along with the failure message if the supplied value is False
+	*/
+	private void function assertTrue(
+		required boolean value,
+		string additionalInfo = ""
+	) {
 		if ( ! value ) {
 
-			fail( "Expected [#value#] to be truthy." );
-
+			fail( "Expected [#value#] to be truthy", Arguments.additionalInfo );
 		}
 
 	}
 
 
-	private void function fail( required string message ) {
+	/**
+	* @hint I send a failure message back to the calling application
+	* @output false
+	* @message The message provided from the assert method
+	* @additionalInfo If provided, this value will be output along with the failure message
+	*/
+	private void function fail(
+		required string message,
+		string additionalInfo = ""
+	) {
 
-		throw( type = "tinytest.AssertionFailed", message = message );
+		local.failMessage = Arguments.message;
+
+		if (Trim(Arguments.additionalInfo) NEQ "") {
+			local.failMessage &= ": " & Arguments.additionalInfo;
+		}
+
+		throw( type = "tinytest.AssertionFailed", message = local.failMessage & ".", extendedInfo = getTestMethodName() );
 
 	}
 
+	/**
+	* @hint Gets the current stack trace, and reads through to find the test that was running when the fail message was generated
+	* @output false
+	*/
+	private string function getTestMethodName() {
+		LOCAL.throwable = CreateObject("java","java.lang.Throwable").getStackTrace();
+		var i = 0;
+
+		for (i=1; i le ArrayLen(LOCAL.throwable); i = i+1)
+		{
+
+			if( LOCAL.throwable[i].getFileName() CONTAINS "test.cfc" ){
+
+				//Get the method name from the StackStrace
+				LOCAL.StackMethodName = LOCAL.throwable[i].getClassName();
+				LOCAL.StackMethodName = Right(LOCAL.StackMethodName, Len(LOCAL.StackMethodName) - find("$func", LOCAL.StackMethodName) - 4);
+
+				//The StackTrace method name is ugly, so get the pretty version from the method name itself.
+				LOCAL.methodFunctions = getMetaData(this).Functions;
+
+				for ( LOCAL.method IN LOCAL.methodFunctions){
+
+					if( LOCAL.stackMethodName == uCase(LOCAL.method.name)){
+
+						return LOCAL.method.name;
+
+					}
+
+				}
+
+				//If for some reason we couldn't get the pretty one, just return the one we already have.
+				return LOCAL.stackMethodName;
+
+			}
+
+		}
+
+		return "no method found";
+
+	}
 }
