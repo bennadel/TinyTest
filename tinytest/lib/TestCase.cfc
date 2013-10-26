@@ -183,8 +183,48 @@ component
 			local.failMessage &= ": " & Arguments.additionalInfo;
 		}
 
-		throw( type = "tinytest.AssertionFailed", message = local.failMessage & "." );
+		throw( type = "tinytest.AssertionFailed", message = local.failMessage & ".", extendedInfo = getTestMethodName() );
 
 	}
 
+	/**
+	* @hint Gets the current stack trace, and reads through to find the test that was running when the fail message was generated
+	* @output false
+	*/
+	private string function getTestMethodName() {
+		LOCAL.throwable = CreateObject("java","java.lang.Throwable").getStackTrace();
+		var i = 0;
+
+		for (i=1; i le ArrayLen(LOCAL.throwable); i = i+1)
+		{
+
+			if( LOCAL.throwable[i].getFileName() CONTAINS "test.cfc" ){
+
+				//Get the method name from the StackStrace
+				LOCAL.StackMethodName = LOCAL.throwable[i].getClassName();
+				LOCAL.StackMethodName = Right(LOCAL.StackMethodName, Len(LOCAL.StackMethodName) - find("$func", LOCAL.StackMethodName) - 4);
+
+				//The StackTrace method name is ugly, so get the pretty version from the method name itself.
+				LOCAL.methodFunctions = getMetaData(this).Functions;
+
+				for ( LOCAL.method IN LOCAL.methodFunctions){
+
+					if( LOCAL.stackMethodName == uCase(LOCAL.method.name)){
+
+						return LOCAL.method.name;
+
+					}
+
+				}
+
+				//If for some reason we couldn't get the pretty one, just return the one we already have.
+				return LOCAL.stackMethodName;
+
+			}
+
+		}
+
+		return "no method found";
+
+	}
 }
