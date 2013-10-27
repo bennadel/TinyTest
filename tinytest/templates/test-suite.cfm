@@ -162,22 +162,29 @@
 							<cfloop
 								index="stackItem"
 								array="#testResults.getError().getStackTrace()#">
-									
+
 								<!---
-									Ignore some aspects of the stack trace that are not relevant to the 
+									Ignore some aspects of the stack trace that are not relevant to the
 									user's error. These include both ColdFusion and Tiny Test framework files.
 								--->
 								<cfif listFindNoCase( "Application.cfc,test-suite.cfm,TestSuite.cfc,TestCase.cfc", stackItem.fileName )>
-									
+
 									<cfcontinue />
 
 								</cfif>
-								
+
 								<div title="#htmlEditFormat( stackItem.filePath )#" class="file">
 									#stackItem.fileName# : Line #stackItem.lineNumber#
+
+									<!--- Output the contextual method, if available. --->
+									<cfif len( stackItem.methodName )>
+										
+										&mdash; #stackItem.methodName#()
+
+									</cfif>
 								</div>
 
-							</cfloop>		
+							</cfloop>
 
 							<div class="message">
 								#htmlEditFormat( testResults.getError().getErrorMessage() )#
@@ -215,18 +222,18 @@
 
 					<ol class="tests">
 
-						<cfloop 
+						<cfloop
 							index="testCaseName"
 							array="#testCaseNames#">
-							
+
 							<li class="test">
 
 								<label>
-									
-									<input 
+
+									<input
 										type="checkbox"
 										name="selectedTestCases"
-										value="#htmlEditFormat( testCaseName )#" 
+										value="#htmlEditFormat( testCaseName )#"
 										<cfif listFind( form.selectedTestCases, testCaseName )>
 											checked="checked"
 										</cfif>
@@ -244,7 +251,7 @@
 
 				</div>
 				<!-- END: Test List. -->
-				
+
 
 			<!--- There are no test cases available. --->
 			<cfelse>
@@ -252,9 +259,9 @@
 
 				<!-- BEGIN: No Test List. -->
 				<div class="noTestList">
-					
+
 					<strong>Oops</strong>: There are no test cases in your "specs" directory.<br />
-					
+
 					See the <a href="./README.md">Readme.md</a> file for instructions.
 
 				</div>
@@ -276,7 +283,7 @@
 
 			</label>
 			<!-- END: Auto-Run. -->
-			
+
 
 		</form>
 		<!-- END: Form. -->
@@ -286,7 +293,7 @@
 		<div class="processingOverlay">
 
 			<div class="message">
-				
+
 				<div class="plan">
 					Running <span class="count">0</span> Test Cases
 				</div>
