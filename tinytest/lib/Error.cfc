@@ -103,7 +103,7 @@ component
 			var escapedMethodName = reReplace( methodName, "([\\$])", "\\\1", "all" );
 
 			// Look for both the script-based and tag-based definitions.
-			var methodDefinitions = reMatch( "(?i)#escapedMethodName#\s*\(|""#escapedMethodName#""", fileContent );
+			var methodDefinitions = reMatch( "(?i)\b#escapedMethodName#\s*\(|""#escapedMethodName#""", fileContent );
 
 			// If we found the definition, return the true-cased name, less the other method
 			// definition markers we needed for the regex match.
