@@ -3,7 +3,6 @@ component
 	hint = "I represent the results of a test suite."
 	{
 
-
 	public any function init() {
 
 		// For duration of testing.
@@ -131,6 +130,5 @@ component
 	// ---
 	// PRIVATE METHODS.
 	// ---
-
 
 }

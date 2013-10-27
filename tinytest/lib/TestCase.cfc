@@ -71,35 +71,35 @@ component
 	/**
 	* @hint I am a short-hand for the assertTrue() method.
 	* @output false
-	* @value A True or False value that will be passed on to the assertTrue method
-	* @additionalInfo If provided, this value will be output along with the failure message if the value is False
+	* @value A True or False value that will be passed on to the assertTrue method.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function assert(
 		required boolean value,
 		string additionalInfo = ""
-	) {
+		) {
 
-		assertTrue( ArgumentCollection = Arguments );
+		assertTrue( value, additionalInfo );
 
 	}
 
 
 	/**
-	* @hint I test to see if the supplied values are equal or not
+	* @hint I test to see if the supplied values are equal or not.
 	* @output false
-	* @valueA The first value to be compared
-	* @valueB The value to compare against valueA
-	* @additionalInfo If provided, this value will be output along with the failure message if the valueA and valueB are not equal
+	* @valueA The first value to be compared.
+	* @valueB The value to compare against valueA.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function assertEquals(
 		required string valueA,
 		required string valueB,
 		string additionalInfo = ""
-	) {
+		) {
 
 		if ( valueA != valueB ) {
 
-			fail( "Expected [#valueA#] to equal [#valueB#]", Arguments.additionalInfo );
+			fail( "Expected [#valueA#] to equal [#valueB#].", additionalInfo );
 
 		}
 
@@ -107,19 +107,19 @@ component
 
 
 	/**
-	* @hint I test to see if the supplied value is equal to False
+	* @hint I test to see if the supplied value is equal to False.
 	* @output false
-	* @value A True or False value to test
-	* @additionalInfo If provided, this value will be output along with the failure message if the supplied value is True
+	* @value A True or False value to test.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function assertFalse(
 		required boolean value,
 		string additionalInfo = ""
-	 ) {
+		 ) {
 
 		if ( value ) {
 
-			fail( "Expected [#value#] to be falsey", Arguments.additionalInfo );
+			fail( "Expected [#value#] to be falsey.", additionalInfo );
 
 		}
 
@@ -127,21 +127,21 @@ component
 
 
 	/**
-	* @hint I test to see if the supplied values are equal or not
+	* @hint I test to see if the supplied values are equal or not.
 	* @output false
-	* @valueA The first value to be compared
-	* @valueB The value to compare against valueA
-	* @additionalInfo If provided, this value will be output along with the failure message if the valueA and valueB are equal
+	* @valueA The first value to be compared.
+	* @valueB The value to compare against valueA.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function assertNotEquals(
 		required string valueA,
 		required string valueB,
 		string additionalInfo = ""
-	) {
+		) {
 
 		if ( valueA == valueB ) {
 
-			fail( "Expected [#valueA#] to not equal [#valueB#]", Arguments.additionalInfo );
+			fail( "Expected [#valueA#] to not equal [#valueB#].", additionalInfo );
 
 		}
 
@@ -149,82 +149,43 @@ component
 
 
 	/**
-	* @hint I test to see if the supplied value is equal to True
+	* @hint I test to see if the supplied value is equal to True.
 	* @output false
-	* @value A True or False value to test
-	* @additionalInfo If provided, this value will be output along with the failure message if the supplied value is False
+	* @value A True or False value to test.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function assertTrue(
 		required boolean value,
 		string additionalInfo = ""
-	) {
+		) {
+		
 		if ( ! value ) {
 
-			fail( "Expected [#value#] to be truthy", Arguments.additionalInfo );
+			fail( "Expected [#value#] to be truthy.", additionalInfo );
 		}
 
 	}
 
 
 	/**
-	* @hint I send a failure message back to the calling application
+	* @hint I send a failure message back to the calling application.
 	* @output false
-	* @message The message provided from the assert method
-	* @additionalInfo If provided, this value will be output along with the failure message
+	* @message The message provided from the assert method.
+	* @additionalInfo If provided, this value will be output along with the failure message (if failure occurs).
 	*/
 	private void function fail(
 		required string message,
 		string additionalInfo = ""
-	) {
+		) {
 
-		local.failMessage = Arguments.message;
+		if ( len( additionalInfo ) ) {
 
-		if (Trim(Arguments.additionalInfo) NEQ "") {
-			local.failMessage &= ": " & Arguments.additionalInfo;
-		}
-
-		throw( type = "tinytest.AssertionFailed", message = local.failMessage & ".", extendedInfo = getTestMethodName() );
-
-	}
-
-	/**
-	* @hint Gets the current stack trace, and reads through to find the test that was running when the fail message was generated
-	* @output false
-	*/
-	private string function getTestMethodName() {
-		LOCAL.throwable = CreateObject("java","java.lang.Throwable").getStackTrace();
-		var i = 0;
-
-		for (i=1; i le ArrayLen(LOCAL.throwable); i = i+1)
-		{
-
-			if( LOCAL.throwable[i].getFileName() CONTAINS "test.cfc" ){
-
-				//Get the method name from the StackStrace
-				LOCAL.StackMethodName = LOCAL.throwable[i].getClassName();
-				LOCAL.StackMethodName = Right(LOCAL.StackMethodName, Len(LOCAL.StackMethodName) - find("$func", LOCAL.StackMethodName) - 4);
-
-				//The StackTrace method name is ugly, so get the pretty version from the method name itself.
-				LOCAL.methodFunctions = getMetaData(this).Functions;
-
-				for ( LOCAL.method IN LOCAL.methodFunctions){
-
-					if( LOCAL.stackMethodName == uCase(LOCAL.method.name)){
-
-						return LOCAL.method.name;
-
-					}
-
-				}
-
-				//If for some reason we couldn't get the pretty one, just return the one we already have.
-				return LOCAL.stackMethodName;
-
-			}
+			message &= ( " " & additionalInfo );
 
 		}
 
-		return "no method found";
+		throw( type = "tinytest.AssertionFailed", message = message );
 
 	}
+
 }

@@ -174,8 +174,14 @@
 								</cfif>
 
 								<div title="#htmlEditFormat( stackItem.filePath )#" class="file">
-									#stackItem.fileName#<br />
-									#stackItem.methodName# : Line #stackItem.lineNumber#
+									#stackItem.fileName# : Line #stackItem.lineNumber#
+
+									<!--- Output the contextual method, if available. --->
+									<cfif len( stackItem.methodName )>
+										
+										&mdash; #stackItem.methodName#()
+
+									</cfif>
 								</div>
 
 							</cfloop>
