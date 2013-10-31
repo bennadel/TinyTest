@@ -3,20 +3,20 @@
 
 by [Ben Nadel][1]
 
-Tiny Test is a ColdFusion unit testing framework that I built for personal use as a means 
+Tiny Test is a ColdFusion unit testing framework that I built for personal use as a means
 to become more comfortable with the idea of unit testing and TDD (Test Drive Development).
 The feature is set is intended to be incredibly limited; and, it's meant to work with an
 HTML page that comes pre-packaged with the framework. You just drop it in, point it at
 the test specifications, and open it up in the browser.
 
-If you want a more full-featured unit testing framework, I would suggest looking into 
+If you want a more full-featured unit testing framework, I would suggest looking into
 [MXUnit][2]; it's a robust unit testing framework that has been battle-hardened for years
 by the ColdFusion community.
 
 ## Railo Compatibility
 
-Railo's ColdFusion engine has some settings that require you to use explicit Arguments 
-and Variables scope references. Since I am doubtful that I can be mindful of this, I 
+Railo's ColdFusion engine has some settings that require you to use explicit Arguments
+and Variables scope references. Since I am doubtful that I can be mindful of this, I
 have created a separate [Railo branch][3] branch. As features are added here, they will
 be cherry-picked into the Railo branch to keep the two in sync.
 
@@ -35,13 +35,13 @@ ones that you specify in the HTML web page served up by the Tiny Test framework.
 
 ## Test Cases
 
-Inside of your test cases, Tiny Test will attempt to invoke every public method that 
+Inside of your test cases, Tiny Test will attempt to invoke every public method that
 starts with, "test". For example, the following are all valid test method names:
 
 * testThatThatWorks();
 * testThatThisWorks();
 
-Within each test case can define optional methods that run before and / or after each 
+Within each test case can define optional methods that run before and / or after each
 test method:
 
 * beforeTests()
@@ -49,7 +49,7 @@ test method:
 * teardown()
 * afterTests()
 
-In these methods, you can reset the private variables of your test case to be "pristine" 
+In these methods, you can reset the private variables of your test case to be "pristine"
 for each invocation of the provided test methods.
 
 Each of your test cases should extend the TestCase.cfc component that ships in the specs
@@ -62,7 +62,7 @@ directory. This is your bridge into the core functionality provided by Tiny Test
 
 ## Assertions
 
-Each of your test methods will probably make some assertion based on the state of your 
+Each of your test methods will probably make some assertion based on the state of your
 components. Out of the box, Tiny Test provide only the most basic assertions:
 
 * assert( truthy )
@@ -72,14 +72,23 @@ components. Out of the box, Tiny Test provide only the most basic assertions:
 * assertNotEquals( simpleValue, simpleValue )
 
 If you want to add your own custom assertions, feel free to add them to the TestCase.cfc
-provided in the specs directory. Since each of your test cases extends this base 
-component, each of your test cases will have access to the custom methods that you define 
+provided in the specs directory. Since each of your test cases extends this base
+component, each of your test cases will have access to the custom methods that you define
 within TestCase.cfc.
 
-Inside of your custom assertions, you can make use of the private method, fail(), which 
+Inside of your custom assertions, you can make use of the private method, fail(), which
 is how the Tiny Test tracks exceptions:
 
 * fail( errorMessage )
+
+You can also add your own additional error message information by passing the additionlInfo argument into the assert
+methods. For example, if you wanted to display some more information about why/how something failed, try this:
+
+```javascript
+A = 2;
+B = 10;
+assertEquals( A, B, "The first value, " & A & ", is " & B - A & " greater than the second value, " & B);
+```
 
 Hopefully you've found some of this vaguely interesting.
 
