@@ -83,7 +83,15 @@ is how the Tiny Test tracks exceptions:
 
 Hopefully you've found some of this vaguely interesting.
 
+## JavaScript Version - Tiny Test JS
+
+I have ported the Tiny Test unit testing framework (as best as possible) over to 
+JavaScript. I call it (no surprise) [Tiny Test JS][tinytestjs]. It is an AngularJS 
+application that is loaded by RequireJS and then, subsequently, uses RequireJS to load
+all of the test case modules.
+
 
 [1]: http://www.bennadel.com
 [2]: http://mxunit.org
 [3]: https://github.com/bennadel/TinyTest/tree/railo
+[tinytestjs]: https://github.com/bennadel/TinyTestJS
